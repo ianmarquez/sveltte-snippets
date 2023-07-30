@@ -1,13 +1,68 @@
-<!-- YOU CAN DELETE EVERYTHING IN THIS PAGE -->
+<script lang="ts">
+	import CodeSnippetCard from '../CodeSnippetCard.svelte';
+	import { addSnippet, snippetStore } from '../SnippetStore';
+	import type { CodeSnippetInput } from '../app';
+	import type { PageData } from './$types';
 
-<div class="container h-full mx-auto flex justify-center items-center">
-	<div class="space-y-5">
-		<h1 class="h1">Let's get cracking bones!</h1>
-		<p>Start by exploring:</p>
-		<ul>
-			<li><code class="code">/src/routes/+layout.svelte</code> - barebones layout, the CSS import order is critical!</li>
-			<li><code class="code">/src/app.postcss</code> - minimal css to make the page full screen, may not be relevant for your project</li>
-			<li><code class="code">/src/routes/+page.svelte</code> - this page, you can replace the contents</li>
-		</ul>
+	export let data: PageData;
+
+	let formData: CodeSnippetInput = {
+		title: '',
+		language: 'css',
+		code: ''
+	};
+
+	snippetStore.set(data.snippets);
+</script>
+
+<div class="flex justify-center">
+	<div class="grid grid-cols-1 gap-4 min-w-full md:min-w-[750px]">
+		<h3 class="text-center py-6">Create A Code Snippet</h3>
+		<div class="card p-4 w-fill text-token space-y-4">
+			<label class="label">
+				<span>Snippet Title</span>
+				<input
+					class="input"
+					type="text"
+					placeholder="Enter title here...."
+					bind:value={formData.title}
+				/>
+			</label>
+			<label class="label">
+				<span>Programming Language</span>
+				<select class="select" bind:value={formData.language}>
+					<option value="html">HTML</option>
+					<option value="css">CSS</option>
+					<option value="typescript">TypeScript</option>
+				</select>
+			</label>
+			<label class="label">
+				<span>Code Snippet</span>
+				<textarea
+					class="textarea"
+					rows="4"
+					placeholder="Enter your snippet code here..."
+					bind:value={formData.code}
+				/>
+			</label>
+			<button
+				type="button"
+				class="btn btn-sm variant-filled-primary"
+				on:click={() => {
+					addSnippet(formData);
+					formData = {
+						title: '',
+						language: 'html',
+						code: ''
+					};
+				}}>Create Snippet</button
+			>
+		</div>
+		<div class="text-center py-6">
+			<h2>My Code Snippets</h2>
+		</div>
+		{#each $snippetStore as snippet, index}
+			<CodeSnippetCard {snippet} {index} />
+		{/each}
 	</div>
 </div>
