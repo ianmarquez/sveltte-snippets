@@ -1,5 +1,4 @@
 import { writable, get } from 'svelte/store';
-import type { CodeSnippet, CodeSnippetInput } from './app';
 
 export const snippetStore = writable<CodeSnippet[]>([]);
 

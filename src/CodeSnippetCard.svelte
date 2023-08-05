@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { CodeBlock } from '@skeletonlabs/skeleton';
 	import { deleteSnippet, toggleFavorite } from './SnippetStore';
-	import type { CodeSnippet } from './app';
 	export let snippet: CodeSnippet = {
 		title: '',
-		language: '',
+		language: 'css',
 		code: '',
 		favorite: false
 	};

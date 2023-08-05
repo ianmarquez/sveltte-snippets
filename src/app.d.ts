@@ -7,12 +7,12 @@ declare namespace App {
 	// interface Platform {}
 }
 
-interface CodeSnippetInput {
+declare class CodeSnippetInput {
 	title: string;
 	language: 'typescript' | 'css' | 'html';
 	code: string;
 }
 
-export interface CodeSnippet extends CodeSnippetInput {
+declare class CodeSnippet extends CodeSnippetInput {
 	favorite: boolean;
 }
